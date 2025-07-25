@@ -99,7 +99,8 @@ class GoogleNewsCrawler:
                         "snippet": snippet,
                         "published_date": published_date,
                         "keyword": keyword,
-                        "language": lang_short
+                        "language": lang_short,
+                        "crawl_flag": False
                     })
                 except Exception as e:
                     logging.error(f"      Error extracting article data: {e}")
