@@ -34,23 +34,24 @@ def month_range(self, start, end):
 def three_month_range(start: datetime, end: datetime):
     """
     Yields (start, end) date tuples for up to 3-month intervals.
-    Handles partial ranges (e.g., 1, 2, 4, 7 months) robustly.
+    Handles partial ranges robustly.
     """
     current = start.replace(day=1)
     while current <= end:
-        # Calculate quarter end
-        next_month = current.month + 2
-        next_year = current.year
-        if next_month > 12:
-            next_month -= 12
-            next_year += 1
-        # The end of the 3rd month in the window
-        quarter_end = datetime(next_year, next_month, 1) + timedelta(days=-1)
-        # Clamp to user-provided end date
-        range_end = min(quarter_end, end)
+        # Find the last day of the 3rd month
+        # Add 3 months: if current = Jan, go to April 1st, then -1 day = Mar 31
+        if current.month + 3 > 12:
+            next_year = current.year + ((current.month + 3 - 1) // 12)
+            next_month = ((current.month + 3 - 1) % 12) + 1
+        else:
+            next_year = current.year
+            next_month = current.month + 3
+        window_end = datetime(next_year, next_month, 1) - timedelta(days=1)
+        # Clamp to end
+        range_end = min(window_end, end)
         yield (current, range_end)
         # Advance 3 months
-        if current.month >= 10:
+        if current.month > 9:
             current = datetime(current.year + 1, ((current.month + 2) % 12) + 1, 1)
         else:
             current = datetime(current.year, current.month + 3, 1)
