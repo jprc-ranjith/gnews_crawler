@@ -79,10 +79,9 @@ class GoogleNewsCrawler:
                     url = article.find_element(By.XPATH, ".//div/a[@class='WlydOe']").get_attribute("href")
                     snippet = article.find_element(By.XPATH, ".//div/div[@class='SoAPf']/div[contains(@class, 'GI74Re')]").text
                     published_date = article.find_element(By.XPATH, ".//div/div[@class='SoAPf']/div[contains(@class, 'OSrXXb')]").text
-                    parsed_date = dateparser.parse(published_date)
                     
-                    if parsed_date:
-                        published_date = parsed_date.strftime('%Y-%m-%d')
+                    if published_date:
+                        published_date = dateparser.parse(published_date)
                     else:
                         published_date = ""
                         
