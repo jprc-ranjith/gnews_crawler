@@ -97,7 +97,6 @@ class GoogleNewsCrawler:
                         "url": url,
                         "snippet": snippet,
                         "published_date": published_date,
-                        "keyword": keyword,
                         "language": lang_short,
                         "crawl_flag": False
                     })
